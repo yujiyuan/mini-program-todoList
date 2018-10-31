@@ -1,0 +1,48 @@
+<view class="todo-list-page">
+    <view class="todo-form">
+        <input type="text" class="todo-input" value="{{inputValue}}" confirm-type="search" bindinput="bindKeyInput"/>
+        <button type="primary" size="mini" class="todo-addTodoBtn" bindtap="addTodo">添加</button>
+    </view>
+    <view class="todo-nav-tab">
+        <block wx:for="{{todoNav}}" wx:key="{{index}}">
+            <view class="todo-nav-tab-item {{currentTab === index ? 'active' :''}}" 
+            data-current="{{index}}" data-type="{{item}}"
+             bindtap="navTabChange">
+                {{item}}
+            </view>
+        </block>
+    </view>
+    <view class="todo-list">
+        <block wx:for="{{todoList}}" wx:key="{{item.id}}" >
+
+            <!-- if的判断应该放在for循环里面，而不是
+                <block wx:for="{{todoList}}" wx:key="{{item.id}}" 
+                wx:elseif="{{item.isComplete&& (type === '已完成')}}"></block>这样去判断
+             -->
+            <block  wx:if="{{!item.isComplete&& (type === '未完成')}}">
+                <view class="todo-item">
+                    <text class="todo-item-label" id="{{item.id}}" bindtap="itemChange">{{item.message}}</text>
+                    <block wx:if="{{item.isComplete}}">
+                        <icon type="success" size="18" class="todo-item-icon" />
+                    </block>
+                </view>
+            </block>
+            <block  wx:if="{{item.isComplete&& (type === '已完成')}}">
+                <view class="todo-item">
+                    <text class="todo-item-label" id="{{item.id}}" bindtap="itemChange">{{item.message}}</text>
+                    <block wx:if="{{item.isComplete}}">
+                        <icon type="success" size="18" class="todo-item-icon" />
+                    </block>
+                </view>
+            </block>
+            <block  wx:if="{{(type === '全部')}}">
+                <view class="todo-item">
+                    <text class="todo-item-label" id="{{item.id}}" bindtap="itemChange">{{item.message}}</text>
+                    <block wx:if="{{item.isComplete}}">
+                        <icon type="success" size="18" class="todo-item-icon" />
+                    </block>
+                </view>
+            </block>
+        </block>
+    </view>
+</view>
