@@ -44,35 +44,10 @@ Page({
         return item
       })
     })
-    console.log(todoList)
   },
   navTabChange(event) {
-    console.log('event====>', event)
-
     const currentTab = event.target.dataset.current;
     const type = event.target.dataset.type;
-    const todolist = [].concat(this.data.todoList);
-    const newTodoList = this.filterTodoList(currentTab, todolist )
-    
     this.setData({ currentTab, type})
   },
-  filterTodoList(currentTab,todoList) {
-    let newTodoList = null;
-    switch (currentTab) {
-      case 1:
-        newTodoList = todoList.filter(item => {
-          return item.isComplete === true
-        });
-        break;
-      case 2:
-        newTodoList = todoList.filter(item => {
-          return item.isComplete !== true
-        })
-        break;
-      default:
-        newTodoList = this.data.todoList
-        break;
-    };
-    return newTodoList;
-  }
 })
